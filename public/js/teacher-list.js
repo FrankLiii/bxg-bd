@@ -1,4 +1,4 @@
-define(['jquery','template'],function($,template){
+define(['jquery','template','bootstrap'],function($,template){
 	$.ajax({
 		type:'get',
 		url:'/api/teacher',
@@ -32,7 +32,22 @@ define(['jquery','template'],function($,template){
 					}
 
 				})
-
+			})
+			// 查看功能
+			$(".preview").click(function(){
+				var td=$(this).closest("td");
+				var tcId=td.attr("data-tcId");
+				$.ajax({
+					type:"get",
+					url:"/api/teacher/view",
+					dataType:"json",
+					data:{tc_id:tcId},
+					success:function(data){
+						var html=template("modalTpl",data.result);
+						$("#modalInfo").html(html);
+						$("#teacherModal").modal();
+					}
+				})
 			})
 
 		}
