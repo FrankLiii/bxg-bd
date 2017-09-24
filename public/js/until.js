@@ -1,22 +1,20 @@
 define(['jquery'],function($){
-	return {
-		qs : function(key){
-			var param=location.search.substr(1);
-			var result=null;
-			if(param){
-				var ps=param.split("&");				
-				$.each(ps,function(index,item){
-					var ks=item.split('=');
-					if(ks[0]==key){
-						result=ks[1];
-						return false;
-					}
-				})	
-			}
-			return result;
-			
-		}
-	}
-
-})
-	
+  return {
+    qs : function(key){
+      // 获取URL参数中的指定的参数值
+      var param = location.search.substr(1);
+      var result = null;
+      if(param){
+        var ps = param.split('&');
+        $.each(ps,function(index,item){
+          var kv = item.split('=');
+          if(kv[0] == key){
+            result = kv[1];
+            return false;// 终止each循环
+          }
+        });
+      }
+      return result;
+    }
+  }
+});
