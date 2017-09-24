@@ -10,12 +10,14 @@ require.config({
 		validate:"validate/jquery-validate",
 		form:"jquery-form/jquery.form",
 		uploadify:'uploadify/jquery.uploadify.min',
+		region:'jquery-region/jquery.region',
 		until:'../js/until',
 		common:'../js/common',
 		login:'../js/login',
 		teacherlist:'../js/teacher-list',
 		teacheradd:'../js/teacher-add',
 		settings:"../js/setting"
+
 	},
 	shim:{
 		bootstrap:{

@@ -1,4 +1,4 @@
-define(['jquery','template','uploadify'],function($,template){
+define(['jquery','template','uploadify','region'],function($,template){
 	// 获取数据，渲染页面
 	$.ajax({
 		type:"get",
@@ -23,6 +23,9 @@ define(['jquery','template','uploadify'],function($,template){
 			 	}
 			});
 			// 处理省市县三级联动
+			$("#pcd").region({
+				url:"/public/assets/jquery-region/region.json"
+			});
 		}
-	})
-})
+	});
+});
