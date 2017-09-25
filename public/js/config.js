@@ -17,7 +17,9 @@ require.config({
 		teacherlist:'../js/teacher-list',
 		teacheradd:'../js/teacher-add',
 		settings:"../js/setting",
-		region:'jquery-region/jquery.region'
+		region:'jquery-region/jquery.region',
+		index:'../js/index',
+		courselist:'../js/course-list'
 	},
 	shim:{
 		bootstrap:{

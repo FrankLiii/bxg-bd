@@ -1,4 +1,6 @@
-define(['jquery','template','bootstrap'],function($,template){
+define(['jquery','template','until','bootstrap'],function($,template,until){
+	// 设置导航菜单选中
+	until.setMenu(location.pathname);
 	$.ajax({
 		type:'get',
 		url:'/api/teacher',
