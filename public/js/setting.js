@@ -1,4 +1,4 @@
-define(['jquery','template','uploadify','region'],function($,template){
+define(['jquery','template','ckeditor','uploadify','region','datepicker','language'],function($,template,CKEDITOR){
 	// 获取数据，渲染页面
 	$.ajax({
 		type:"get",
@@ -18,13 +18,20 @@ define(['jquery','template','uploadify','region'],function($,template){
 			 	fileObjName:'tc_avatar',
 			 	onUploadSuccess:function(a,b){
 			 		var obj=JSON.parse(b);
-			 		$(".preciew img").attr('src',obj.result.path);
+			 		$(".preview img").attr('src',obj.result.path);
 			 		
 			 	}
 			});
 			// 处理省市县三级联动
 			$("#pcd").region({
 				url:"/public/assets/jquery-region/region.json"
+			});
+			// 富文本插件
+			CKEDITOR.replace("editor",{
+				toolbarGroups : [
+		          { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+		          { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }
+		        ]
 			});
 		}
 	});
