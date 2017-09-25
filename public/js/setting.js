@@ -1,4 +1,4 @@
-define(['jquery','template','ckeditor','uploadify','region','datepicker','language'],function($,template,CKEDITOR){
+define(['jquery','template','ckeditor','uploadify','region','datepicker','language','validate','form'],function($,template,CKEDITOR){
 	// 获取数据，渲染页面
 	$.ajax({
 		type:"get",
@@ -33,6 +33,37 @@ define(['jquery','template','ckeditor','uploadify','region','datepicker','langua
 		          { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }
 		        ]
 			});
+			// 处理表单提交
+			$("#settingsForm").validate({
+				sendForm:false,
+				valid:function(){
+					// 拼接籍贯信息
+					var p=$("#p").find('option:selected').text();
+					var c=$("#c").find('option:selected').text();
+					var d=$("#d").find('option:selected').text();
+					var hometown=p+'|'+c+'|'+d;
+					// 更新富文本内容
+					for(var instance in CKEDITOR.instances){
+						CKEDITOR.instances[instance].updateElement();
+					}
+					
+					// 提交表单
+					$(this).ajaxSubmit({
+						type:"post",
+						url:"/api/teacher/modify",
+						data:{tc_hometown:hometown},
+						dataType:'json',
+						success:function(data){
+							// 刷新当前页面
+							if(data.code==200){
+								location.reload();
+							}
+						
+						}
+
+					})
+				}
+			})
 		}
 	});
 });
