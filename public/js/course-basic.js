@@ -1,4 +1,4 @@
-define(['jquery','template','until','ckeditor'],function($,template,until,CKEDITOR){
+define(['jquery','template','until','ckeditor','validate','form'],function($,template,until,CKEDITOR){
   // 设置导航菜单选中
   until.setMenu('/course/add');
   // 获取课程ID
@@ -16,7 +16,7 @@ define(['jquery','template','until','ckeditor'],function($,template,until,CKEDIT
       }else{
           data.result.opera="课程添加";
       }
-      console.log(data);
+     
       var html=template('basicTpl',data.result);
       $('#basicInfo').html(html);
       // 处理二级分类的下拉联动
@@ -37,14 +37,33 @@ define(['jquery','template','until','ckeditor'],function($,template,until,CKEDIT
           }
          })
       });
-      // 处理富文本
+      // 处理富文本}
       CKEDITOR.replace('editor',{
         toolbarGroups : [
               { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
               { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }
-            ]
-          });
+            ]   
+      });
+      // 处理表单提交
+      $('#basicForm').validate({
+        sendForm:false,
+        valid:function(){
+          // 处理富文本同步
+          for(var instance in CKEDITOR.instances){
+            CKEDITOR.instances[instance].updateElement();
+          }
+          // 提交表单
+          $(this).ajaxSubmit({
+            type:'post',
+            url:'/api/course/update/basic',
+            dataType:'json',
+            data:{cs_id:csId},
+            success:function(data){
+              location.href="/course/picture?cs_id="+data.result.cs_id;
+            }
+          })
+        }
+      })
     }
-  })
-
-})
+  });
+});
